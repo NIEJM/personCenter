@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>productLists</title>
+	<link rel="stylesheet" href="css/animate.css">
+</head>
+<body>
+	<div class="slideContainer">
+		<ul class="slideLists">
+			<li>1</li>
+			<li>2</li>
+			<li>3</li>
+			<li>4</li>
+		</ul>
+	</div>
+<script>
+var slideContainer = document.getElementsByClassName('slideContainer');
+var slideContainer_W = slideContainer[0].clientWidth;
+var slideLis = slideContainer[0].getElementsByTagName('li');
+var slideUl = document.getElementsByClassName('slideLists');
+var slideLists_W = slideLis[0].clientWidth;
+console.log(slideLists_W,slideContainer_W);
+slideUl[0].style.left = 0 + 'px';
+var time=100,animated=false,interval=10,pre=0,show=0,next=0,animated=false;
+for(var i=0;i<slideLis.length;i++){
+	slideLis[i].index = i;
+	if(i==0){
+		slideLis[i].style.left = 0 + 'px';
+	}else if(i==1){
+		slideLis[i].style.left = slideContainer_W*0.6 + 'px';
+	}else{
+		slideLis[i].style.left = slideContainer_W + 'px';
+	}
+}
+function slideRun(el,offset){
+	var slideUlLeft = parseFloat(el.style.left);
+	var speed = offset/(time/interval);
+	var slideUlNowL = slideUlLeft + offset;
+	function slideAnimate(){
+		// console.log(slideUlLeft,slideUlLeft < slideUlNowL)
+		slideUlLeft = parseFloat(el.style.left);
+		// console.log(slideUlLeft)
+		if(slideUlLeft > slideUlNowL && speed < 0 || slideUlLeft < slideUlNowL && speed > 0){
+			if(slideUlLeft + speed < slideUlNowL || slideUlLeft + speed < slideUlNowL){
+				el.style.left = slideUlNowL + 'px';
+			}else{
+				el.style.left = slideUlLeft + speed + 'px';
+				setTimeout(arguments.callee,interval);
+			}
+			
+		}
+	}
+	slideAnimate();
+}
+var startX = 0,endX=0,slideX=0,
+	slideX0=0,slideX1=0,slideX2=0,
+	currentslideX=0,currentslideX1=0,
+	currentslideX2=0,isTouchEnd=true,
+	isMove=false,currentslideX3=0,currentslideX0=0;
+document.ontouchstart = function(e){//手指触摸屏幕
+	var e = e || window.e;
+	if(isTouchEnd && e.touches.length ==1){
+		
+		startX = e.touches[0].pageX;
+		show = startX < slideLists_W ? e.target.index : e.target.index -1;
+		if(show==slideLis.length-2){
+			currentslideX1 = parseFloat(slideLis[show].style.left);
+			currentslideX2 = parseFloat(slideLis[show+1].style.left);
+		}else if(show == slideLis.length-1){
+			currentslideX1 = parseFloat(slideLis[show].style.left);
+		}else if(show>0){
+			currentslideX0 = parseFloat(slideLis[show-1].style.left);
+		}else{
+			currentslideX1 = parseFloat(slideLis[show].style.left);
+			currentslideX2 = parseFloat(slideLis[show+1].style.left);
+			currentslideX3 = parseFloat(slideLis[show+2].style.left);
+		}
+
+		isTouchEnd=false;
+		isMove = false;
+	}
+
+}
+
+document.ontouchmove = function(e){//手指在屏幕滑动
+	var e = e || window.e;
+	e.preventDefault();
+	if(isTouchEnd){return;}
+	endX = e.touches[0].pageX;
+	slideX = endX - startX;
+	if(slideX<0){//左滑
+		if(startX > currentslideX2){
+			slideX0 = slideX*(slideLists_W/startX);
+			slideX1 = slideX*(currentslideX2/startX);
+			slideX2 = slideX*(slideContainer_W*0.4/startX);
+		}else{
+			slideX0 = slideX;
+			slideX1 = slideX*0.8;
+			slideX2 = slideX*0.6;
+		}
+		if(show >= slideLis.length-2 && show != slideLis.length-1 ){
+			slideLis[show].style.left = currentslideX1 + slideX0 + 'px';
+			slideLis[show+1].style.left = currentslideX2 + slideX1 + 'px';
+		}else if(show == slideLis.length-1){
+				slideLis[show].style.left = currentslideX1 + slideX0 + 'px';
+		}else{
+			slideLis[show].style.left = currentslideX1 + slideX0 + 'px';
+			slideLis[show+1].style.left = currentslideX2 + slideX1 + 'px';
+			slideLis[show+2].style.left = currentslideX3 + slideX2 + 'px';
+		}
+		if(show>0){
+			slideLis[show-1].style.left = currentslideX0 + slideX + 'px';
+		}
+	}else{//右滑
+		if(startX > currentslideX2){
+			slideX0 = slideX*(slideLists_W/startX);
+			slideX1 = slideX*(currentslideX2/startX);
+			slideX2 = slideX*(slideContainer_W*0.4/startX);
+		}else{
+			slideX0 = slideX;
+			slideX1 = slideX*0.8;
+			slideX2 = slideX*0.6;
+		}
+		if(show == slideLis.length-1){
+			// slideLis[show-1].style.left = currentslideX0 + slideX + 'px';
+			slideLis[show].style.left = currentslideX1 + slideX1 + 'px';
+		}else{
+			// slideLis[show-1].style.left = currentslideX0 + slideX + 'px';
+			slideLis[show].style.left = currentslideX1 + slideX1 + 'px';
+			slideLis[show+1].style.left = currentslideX2 + slideX2 + 'px';
+		}
+		if(show>0){
+			slideLis[show-1].style.left = currentslideX0 + slideX + 'px';
+		}
+		// console.log(slideX,slideX1);
+		
+	}
+	isMove=true;
+
+	
+}
+
+document.ontouchend = function(e){//手指离开屏幕
+	var e = e || window.e;
+	if(isMove && !isTouchEnd){
+		isTouchEnd = true;
+		isMove = false;
+		if(Math.abs(slideX)<slideLists_W*0.3){
+			if(show>0){
+				slideRun(slideLis[show-1],-slideX);
+			}
+			// console.log('666 :'+slideX0,slideX1);
+			if(show == slideLis.length-2){console.log('-11');
+				if(slideX>0){
+					slideRun(slideLis[show],-slideX1);
+					slideRun(slideLis[show+1],-slideX2);
+				}else{
+					slideRun(slideLis[show],-slideX0);
+					slideRun(slideLis[show+1],-slideX1);
+				}
+				
+			}else if(show == slideLis.length-1){console.log('99')
+				slideRun(slideLis[show],-slideX0);
+			}else if(show==1){
+				slideRun(slideLis[show],-slideX0);
+				slideRun(slideLis[show+1],-slideX1);
+			}else if(show==0){
+				slideRun(slideLis[show],-slideX1);
+				slideRun(slideLis[show+1],-slideX2);
+			}else{console.log(slideX,slideX0,slideX1,slideX2);
+				slideRun(slideLis[show],-slideX0);
+				slideRun(slideLis[show+1],-slideX1);
+				slideRun(slideLis[show+2],-slideX2);		
+			}
+		}else{
+			if(slideX<0){
+				if(show>0){
+					slideRun(slideLis[show-1],-slideX);
+				}
+				if(show >= slideLis.length-2 && show != slideLis.length-1){
+					slideRun(slideLis[show],-slideLists_W-slideX0);
+					slideRun(slideLis[show+1],-(slideContainer_W*0.6)-slideX1);
+				}else if(show == slideLis.length-1){console.log('3')
+					slideRun(slideLis[show],-slideX0);
+				}else{
+					slideRun(slideLis[show],-slideLists_W-slideX0);
+					slideRun(slideLis[show+1],-(slideContainer_W*0.6)-slideX1);
+					slideRun(slideLis[show+2],-(slideContainer_W*0.4)-slideX2);
+				}	
+			}else{
+				// if(show<slideLis.length-1){
+				// 	slideRun(slideLis[show+1],-slideX);
+				// }
+				// console.log(slideX0,slideX1,slideX2);
+				if(show<slideLis.length-1){
+					slideRun(slideLis[show+1],(slideContainer_W*0.4)-slideX2);
+				}
+				if(show == 0){
+					// console.log(slideX0,slideX1,slideX2);
+					slideRun(slideLis[show],-slideX0);
+					slideRun(slideLis[show+1],-slideX1);
+					slideRun(slideLis[show+2],-slideX2);
+				}else{
+					slideRun(slideLis[show],(slideContainer_W*0.6)-slideX1);
+				}
+				slideRun(slideLis[show-1],slideLists_W-slideX0);
+				
+				
+				
+			}
+
+		}
+
+		show=0;
+	}
+	
+}
+
+
+
+
+
+</script>
+</body>
+</html>

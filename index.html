@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>法侣特效</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
+	<link rel="stylesheet" href="css/animate.css">
+</head>
+<body>
+	<div class="personCenter">
+		<div class="show">
+			<span class="btn"><img src="img/huge.jpg" alt="胡歌"></span>
+			<p class="sideL slideT">中国影星</p>
+			<p class="sideR slideT">帅的男人</p>
+			<p class="sideEnd slideT">置死地而后生</p>
+		</div>
+		
+	</div>
+
+</script>
+<script>
+var personCenter = document.getElementsByClassName('personCenter');
+var show = document.getElementsByClassName('show');
+var btn = document.getElementsByClassName('btn');
+var slideTs = document.getElementsByClassName('slideT');
+var show_W = show[0].clientWidth-btn[0].clientWidth;
+var show_H = show[0].clientHeight-btn[0].clientHeight;
+console.log(slideTs.length)
+
+btn[0].onclick=function(){
+	 personCenter[0].style.animation = 'change 0.3s ease-out forwards';
+	this.style.transform = "translate("+-show_W/2+"px"+","+show_H/2+"px) scale(2)";
+	this.style.transition = 'all 0.7s';
+	slideTs[slideTs.length-1].style.animation = 'imgChange2 0.3s ease-out 0.5s forwards';
+	transitionP();
+}
+
+function transitionP(){
+	console.log(slideTs.length-1)
+	for(var i=0;i<slideTs.length-1;i++){
+		console.log(i);
+		slideTs[i].style.animation = 'imgChange1 0.3s 0.5s ease-out forwards';
+	}
+}
+
+
+</script>
+</body>
+</html>
