@@ -60,5 +60,26 @@ height: 100%;}
 @-webkit-keyframes imgChange2{
 	to{top: 75%;visibility:visible;}
 }
-
+@-o-keyframes change{
+	from{background-position: 0 -10px;}
+	to{height: 200px;background-color: blue;background-size: cover;
+	background-position: 0 0;}
+}
+@-o-keyframes imgChange1{
+	to{top: 45%;visibility:visible;}
+}
+@-o-keyframes imgChange2{
+	to{top: 75%;visibility:visible;}
+}
+@-moz-keyframes change{
+	from{background-position: 0 -10px;}
+	to{height: 200px;background-color: blue;background-size: cover;
+	background-position: 0 0;}
+}
+@-moz-keyframes imgChange1{
+	to{top: 45%;visibility:visible;}
+}
+@-moz-keyframes imgChange2{
+	to{top: 75%;visibility:visible;}
+}
 
