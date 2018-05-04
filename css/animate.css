@@ -40,7 +40,7 @@ height: 100%;}
 
 @keyframes change{
 	from{background-position: 0 -10px;}
-	to{height: 200px;background: url(../img/1.jpg) no-repeat 0px 0px;background-size: cover;
+	to{height: 200px;background-color: blue;background-size: cover;
 	background-position: 0 0;}
 }
 @keyframes imgChange1{
@@ -51,7 +51,7 @@ height: 100%;}
 }
 @-webkit-keyframes change{
 	from{background-position: 0 -10px;}
-	to{height: 200px;background: url(../img/1.jpg) no-repeat 0px 0px;background-size: cover;
+	to{height: 200px;background-color: blue;background-size: cover;
 	background-position: 0 0;}
 }
 @-webkit-keyframes imgChange1{
